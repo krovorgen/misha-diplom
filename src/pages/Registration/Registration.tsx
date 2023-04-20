@@ -7,6 +7,7 @@ import { Typography } from '@alfalab/core-components/typography';
 import { Link } from '@alfalab/core-components/link';
 import { NavLink } from 'react-router-dom';
 import { Router } from '../../helpers/router';
+import { ArrowBackMIcon } from '@alfalab/icons-glyph/ArrowBackMIcon';
 export const Registration = () => {
   const onSubmit = useCallback((e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,11 +31,23 @@ export const Registration = () => {
   }, []);
   return (
     <>
+      <NavLink className={styles.link} to={Router.home}>
+        <ArrowBackMIcon /> Вернуться на главную
+      </NavLink>
       <Typography.TitleResponsive tag="h1" className="title">
         Регистрация
       </Typography.TitleResponsive>
       <form className={styles.form} onSubmit={onSubmit}>
         <Input className={styles.input} block label="ФИО" size="s" name="fio" required />
+        <Input
+          className={styles.input}
+          block
+          label="Телефон"
+          size="s"
+          name="tel"
+          type="tel"
+          required
+        />
         <Input className={styles.input} block label="Логин" size="s" name="login" required />
         <Input
           className={styles.input}

@@ -6,6 +6,7 @@ import { Typography } from '@alfalab/core-components/typography';
 import { NavLink } from 'react-router-dom';
 import { Link } from '@alfalab/core-components/link';
 import { Router } from '../../helpers/router';
+import { ArrowBackMIcon } from '@alfalab/icons-glyph/ArrowBackMIcon';
 
 export const Login = () => {
   const onSubmit = useCallback((e: SyntheticEvent<HTMLFormElement>) => {
@@ -24,6 +25,9 @@ export const Login = () => {
   }, []);
   return (
     <>
+      <NavLink className={styles.link} to={Router.home}>
+        <ArrowBackMIcon /> Вернуться на главную
+      </NavLink>
       <Typography.TitleResponsive tag="h1" className="title">
         Логин
       </Typography.TitleResponsive>

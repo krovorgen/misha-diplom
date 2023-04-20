@@ -1,24 +1,16 @@
 import React from 'react';
-import styles from '../../App.module.scss';
-import { Button } from '@alfalab/core-components/button';
-import { NavLink } from 'react-router-dom';
+import { Typography } from '@alfalab/core-components/typography';
+import { Nav } from './Nav';
+import { Order } from './Order';
 
 export const Home = () => {
   return (
-    <div>
-      <h2 className={styles.title}>Заказ</h2>
-      <div className={styles.nav}>
-        <NavLink to="/registration">
-          <Button view="accent" size="xs" Component="span">
-            Регистрация
-          </Button>
-        </NavLink>
-        <NavLink to="/auth">
-          <Button view="accent" size="xs" Component="span">
-            Логин
-          </Button>
-        </NavLink>
-      </div>
-    </div>
+    <>
+      <Typography.TitleResponsive tag="h1" className="title">
+        Заказ
+      </Typography.TitleResponsive>
+      <Order />
+      <Nav />
+    </>
   );
 };

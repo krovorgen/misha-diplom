@@ -10,8 +10,9 @@ body {
   color: #181818;
 }
 
-#__next {
-  min-height: 100vh;
+.title {
+  margin-bottom: 16px;
+  text-align: center;
 }
 
 .link-navigation {
@@ -37,7 +38,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 0 10px;
+  max-width: 1200px;
 }

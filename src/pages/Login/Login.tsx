@@ -1,69 +1,45 @@
 import React, { SyntheticEvent, useCallback } from 'react';
+import styles from '../Registration/Registration.module.scss';
 import { Input } from '@alfalab/core-components/input';
-
-import styles from './Registration.module.scss';
 import { Button } from '@alfalab/core-components/button';
 import { Typography } from '@alfalab/core-components/typography';
-import { Link } from '@alfalab/core-components/link';
 import { NavLink } from 'react-router-dom';
+import { Link } from '@alfalab/core-components/link';
 import { Router } from '../../helpers/router';
-export const Registration = () => {
+
+export const Login = () => {
   const onSubmit = useCallback((e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const {
-      fio: { value: fio },
       login: { value: login },
-      email: { value: email },
       password: { value: password },
     } = e.currentTarget.elements as typeof e.currentTarget.elements & {
-      fio: { value: string };
       login: { value: string };
-      email: { value: string };
       password: { value: string };
     };
 
-    console.log(fio);
     console.log(login);
-    console.log(email);
     console.log(password);
   }, []);
   return (
     <>
       <Typography.TitleResponsive tag="h1" className="title">
-        Регистрация
+        Логин
       </Typography.TitleResponsive>
       <form className={styles.form} onSubmit={onSubmit}>
-        <Input className={styles.input} block label="ФИО" size="s" name="fio" required />
         <Input className={styles.input} block label="Логин" size="s" name="login" required />
-        <Input
-          className={styles.input}
-          block
-          label="Почта"
-          size="s"
-          type="email"
-          name="email"
-          required
-        />
         <Input className={styles.input} block label="Пароль" size="s" name="password" required />
-        <Input
-          className={styles.input}
-          block
-          label="Повторите пароль"
-          size="s"
-          name="passwordRepeat"
-          required
-        />
         <Typography.Text tag="p">
-          Уже есть аккаунт?{' '}
-          <NavLink to={Router.login}>
+          Нет аккаунта?{' '}
+          <NavLink to={Router.registration}>
             <Link view="default" Component="span">
-              Войти
+              Зарегистрироваться
             </Link>
           </NavLink>{' '}
         </Typography.Text>
         <Button className={styles.button} view="accent" block size="s" type="submit">
-          Registration
+          Auth
         </Button>
       </form>
     </>

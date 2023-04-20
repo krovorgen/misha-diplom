@@ -1,15 +1,29 @@
+@import "./src/scss/helpers/mixins";
+@import "./src/scss/helpers/variables";
+
 .slider {
   position: absolute !important;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+  z-index: 1;
   height: 100vh;
+
+  @include media($sm) {
+    left: -75%;
+  }
+}
+
+.imgSlider {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .content {
   position: relative;
-  z-index: 100;
+  z-index: 2;
   height: 100vh;
 }
 
@@ -27,31 +41,8 @@
   max-width: 655px;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.76);
-}
 
-.title {
-  margin-bottom: 16px;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1.4;
-  text-align: center;
-  color: #fff;
-}
-
-.nav {
-  display: flex;
-  justify-content: space-between;
-
-  > * {
-    display: inline-block;
-    width: 100%;
-
-    > * {
-      width: 100%;
-    }
-
-    &:not(:last-child) {
-      margin-right: 16px;
-    }
+  @include media($sm) {
+    padding: 16px;
   }
 }

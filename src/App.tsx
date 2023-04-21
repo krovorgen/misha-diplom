@@ -7,6 +7,7 @@ import car1 from './images/1.png';
 import car2 from './images/2.png';
 import car3 from './images/3.png';
 import car4 from './images/4.png';
+import car5 from './images/5.png';
 
 import styles from './App.module.scss';
 import { Route, Routes } from 'react-router-dom';
@@ -40,6 +41,9 @@ export const App = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img className={styles.imgSlider} src={car4} alt="car" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img className={styles.imgSlider} src={car5} alt="car" />
         </SwiperSlide>
       </Swiper>
       <div className={styles.content}>

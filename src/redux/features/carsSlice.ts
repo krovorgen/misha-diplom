@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { api } from '../../api';
 
 export type CarType = {
   model: string;
@@ -9,30 +10,23 @@ export type CarType = {
   speedMax: string;
 };
 
-const initialState: CarType[] = [
-  {
-    model: 'bmw m3',
-    enginePower: '600',
-    price: '600$/h',
-    year: '2016',
-    transmission: 'АКПП',
-    speedMax: '320',
-  },
-  {
-    model: 'bmw m4',
-    enginePower: '700',
-    price: '200$/h',
-    year: '2018',
-    transmission: 'МКПП',
-    speedMax: '300',
-  },
-];
+export const getCars = createAsyncThunk('cars/getCars', async () => {
+  const response = await api.getCars();
+  console.log('adfa', response.data);
+  return response.data;
+});
+
+const initialState: CarType[] = [];
 
 const slice = createSlice({
   name: 'cars',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(getCars.fulfilled, (state, action) => {
+      return action.payload;
+    });
+  },
 });
 
 export const {} = slice.actions;

@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './Nav.module.scss';
+import styles from './AuthNav.module.scss';
 import { NavLink } from 'react-router-dom';
 import { Router } from '../../../helpers/router';
 import { Button } from '@alfalab/core-components/button';
 
-export const Nav = () => {
+export const AuthNav = () => {
   return (
     <div className={styles.nav}>
       <NavLink to={Router.registration}>

@@ -8,27 +8,38 @@ import { Link } from '@alfalab/core-components/link';
 import { NavLink } from 'react-router-dom';
 import { Router } from '../../helpers/router';
 import { ArrowBackMIcon } from '@alfalab/icons-glyph/ArrowBackMIcon';
+import { toast } from 'react-toastify';
+import { useAppDispatch } from '../../hooks';
+import { registrationUser } from '../../redux/features/authSlice';
 export const Registration = () => {
-  const onSubmit = useCallback((e: SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const dispatch = useAppDispatch();
 
-    const {
-      fio: { value: fio },
-      login: { value: login },
-      email: { value: email },
-      password: { value: password },
-    } = e.currentTarget.elements as typeof e.currentTarget.elements & {
-      fio: { value: string };
-      login: { value: string };
-      email: { value: string };
-      password: { value: string };
-    };
+  const onSubmit = useCallback(
+    async (e: SyntheticEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    console.log(fio);
-    console.log(login);
-    console.log(email);
-    console.log(password);
-  }, []);
+      const {
+        name: { value: name },
+        tel: { value: tel },
+        login: { value: login },
+        email: { value: email },
+        password: { value: password },
+        passwordRepeat: { value: passwordRepeat },
+      } = e.currentTarget.elements as typeof e.currentTarget.elements & {
+        name: { value: string };
+        tel: { value: string };
+        login: { value: string };
+        email: { value: string };
+        password: { value: string };
+        passwordRepeat: { value: string };
+      };
+
+      if (password !== passwordRepeat) toast.error('Пароли не совпадают :(');
+
+      dispatch(registrationUser({ name, login, email, password, tel }));
+    },
+    [dispatch],
+  );
   return (
     <>
       <NavLink className={styles.link} to={Router.home}>
@@ -38,7 +49,7 @@ export const Registration = () => {
         Регистрация
       </Typography.TitleResponsive>
       <form className={styles.form} onSubmit={onSubmit}>
-        <Input className={styles.input} block label="ФИО" size="s" name="fio" required />
+        <Input className={styles.input} block label="ФИО" size="s" name="name" required />
         <Input
           className={styles.input}
           block

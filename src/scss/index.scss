@@ -3,11 +3,12 @@
 @import "helpers/variables";
 @import "core/reset";
 @import "core/global";
-@import '../../node_modules/swiper/swiper-bundle.min.css';
-@import '../../node_modules/swiper/modules/effect-fade/effect-fade.min.css';
+@import "../../node_modules/swiper/swiper-bundle.min.css";
+@import "../../node_modules/swiper/modules/effect-fade/effect-fade.min.css";
+@import "~react-toastify/dist/ReactToastify.min.css";
 
 body {
   height: 100vh;
-  color: #fff;
   font-size: 16px;
+  color: #fff;
 }

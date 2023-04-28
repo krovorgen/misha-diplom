@@ -1,25 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Select } from '@alfalab/core-components/select';
 import styles from './Order.module.scss';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
 import { v4 } from 'uuid';
-import axios from 'axios';
+import { CarType } from '../../../redux/features/carsSlice';
 
-export const Order = () => {
-  const cars = useSelector((state: RootState) => state.cars);
+type Props = { cars: CarType[] };
+
+export const Order: FC<Props> = ({ cars }) => {
   const options = cars.map((item) => ({ ...item, content: item.model, key: v4() }));
   const [selectedCar, setSelectedCar] = useState(options[0]);
 
   const handleChange = useCallback(({ selectedMultiple }: any) => {
     setSelectedCar(selectedMultiple[0]);
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const data = await axios.get(`http://51.250.65.60:8080/cars/car-types/`);
-      console.log(data.data);
-    })();
   }, []);
 
   return (

@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useCallback } from 'react';
-import styles from '../Registration/Registration.module.scss';
+import styles from './Login.module.scss';
 import { Input } from '@alfalab/core-components/input';
 import { Button } from '@alfalab/core-components/button';
 import { Typography } from '@alfalab/core-components/typography';
@@ -7,9 +7,13 @@ import { NavLink } from 'react-router-dom';
 import { Link } from '@alfalab/core-components/link';
 import { Router } from '../../helpers/router';
 import { ArrowBackMIcon } from '@alfalab/icons-glyph/ArrowBackMIcon';
+import { useAppDispatch } from '../../hooks';
+import { loginUser } from '../../redux/features/authSlice';
 
 export const Login = () => {
-  const onSubmit = useCallback((e: SyntheticEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch();
+
+  const onSubmit = useCallback(async (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const {
@@ -20,6 +24,7 @@ export const Login = () => {
       password: { value: string };
     };
 
+    await dispatch(loginUser({ login, password }));
     console.log(login);
     console.log(password);
   }, []);

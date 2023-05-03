@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UserType } from '../redux/features/authSlice';
 const instance = axios.create({
-  baseURL: 'https://a17226-5e72.f.d-f.pw',
+  baseURL: 'https://a17339-cb01.f.d-f.pw',
 });
 export const api = {
   getCars() {

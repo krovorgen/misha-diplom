@@ -11,6 +11,7 @@ export const Order: FC<Props> = ({ cars }) => {
   const [selectedCar, setSelectedCar] = useState(options[0]);
 
   const handleChange = useCallback(({ selectedMultiple }: any) => {
+    console.log(selectedMultiple);
     setSelectedCar(selectedMultiple[0]);
   }, []);
 

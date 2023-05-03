@@ -4,9 +4,10 @@ import { toast } from 'react-toastify';
 import { api } from '../../api';
 
 export type UserType = {
-  name: string;
+  first_name: string;
+  last_name: string;
   tel: string;
-  login: string;
+  username: string;
   email: string;
   password: string;
   passwordRepeat: string;
@@ -33,7 +34,7 @@ export const initializedApp = createAsyncThunk('auth/initializedApp', async (_, 
 
 export const loginUser = createAsyncThunk(
   'auth/login',
-  async (userData: { login: string; password: string }) => {
+  async (userData: { username: string; password: string }) => {
     try {
       const res = await api.login(userData);
       toast.success('Вход выполнен успешно');
@@ -70,7 +71,7 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(initializedApp.fulfilled, (state, action) => {
-        state.user = action.payload.token;
+        state.user = action.payload.user_data;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.token = action.payload.token;

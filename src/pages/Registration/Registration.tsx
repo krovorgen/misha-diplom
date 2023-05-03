@@ -5,30 +5,33 @@ import styles from './Registration.module.scss';
 import { Button } from '@alfalab/core-components/button';
 import { Typography } from '@alfalab/core-components/typography';
 import { Link } from '@alfalab/core-components/link';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import { Router } from '../../helpers/router';
 import { ArrowBackMIcon } from '@alfalab/icons-glyph/ArrowBackMIcon';
 import { toast } from 'react-toastify';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { registrationUser } from '../../redux/features/authSlice';
 export const Registration = () => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.token);
 
   const onSubmit = useCallback(
     async (e: SyntheticEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       const {
-        name: { value: name },
+        first_name: { value: first_name },
+        last_name: { value: last_name },
         tel: { value: tel },
-        login: { value: login },
+        username: { value: username },
         email: { value: email },
         password: { value: password },
         passwordRepeat: { value: passwordRepeat },
       } = e.currentTarget.elements as typeof e.currentTarget.elements & {
-        name: { value: string };
+        first_name: { value: string };
+        last_name: { value: string };
         tel: { value: string };
-        login: { value: string };
+        username: { value: string };
         email: { value: string };
         password: { value: string };
         passwordRepeat: { value: string };
@@ -36,10 +39,13 @@ export const Registration = () => {
 
       if (password !== passwordRepeat) toast.error('Пароли не совпадают :(');
 
-      dispatch(registrationUser({ name, login, email, password, tel }));
+      dispatch(registrationUser({ first_name, last_name, username, email, password, tel }));
     },
     [dispatch],
   );
+
+  if (user) return <Navigate to={Router.home} />;
+
   return (
     <>
       <NavLink className={styles.link} to={Router.home}>
@@ -49,7 +55,8 @@ export const Registration = () => {
         Регистрация
       </Typography.TitleResponsive>
       <form className={styles.form} onSubmit={onSubmit}>
-        <Input className={styles.input} block label="ФИО" size="s" name="name" required />
+        <Input className={styles.input} block label="Имя" size="s" name="first_name" required />
+        <Input className={styles.input} block label="Фамилия" size="s" name="last_name" required />
         <Input
           className={styles.input}
           block
@@ -59,7 +66,7 @@ export const Registration = () => {
           type="tel"
           required
         />
-        <Input className={styles.input} block label="Логин" size="s" name="login" required />
+        <Input className={styles.input} block label="Логин" size="s" name="username" required />
         <Input
           className={styles.input}
           block
@@ -69,13 +76,22 @@ export const Registration = () => {
           name="email"
           required
         />
-        <Input className={styles.input} block label="Пароль" size="s" name="password" required />
+        <Input
+          className={styles.input}
+          block
+          label="Пароль"
+          size="s"
+          name="password"
+          type="password"
+          required
+        />
         <Input
           className={styles.input}
           block
           label="Повторите пароль"
           size="s"
           name="passwordRepeat"
+          type="password"
           required
         />
         <Typography.Text tag="p">

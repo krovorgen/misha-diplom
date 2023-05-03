@@ -12,7 +12,6 @@ export type CarType = {
 
 export const getCars = createAsyncThunk('cars/getCars', async () => {
   const response = await api.getCars();
-  console.log('adfa', response.data);
   return response.data;
 });
 

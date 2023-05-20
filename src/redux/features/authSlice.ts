@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { api } from '../../api';
 
 export type UserType = {
+  id: number;
   first_name: string;
   last_name: string;
   tel: string;
@@ -71,10 +72,14 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(initializedApp.fulfilled, (state, action) => {
-        state.user = action.payload.user_data;
+        if (action.payload?.user_data) {
+          state.user = action.payload.user_data;
+        }
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.token = action.payload.token;
+        if (action.payload?.token) {
+          state.token = action.payload.token;
+        }
       })
       .addCase(registrationUser.fulfilled, (state, action) => {
         state.token = action.payload.token;

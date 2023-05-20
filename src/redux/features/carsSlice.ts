@@ -2,12 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../api';
 
 export type CarType = {
+  id: number;
   model: string;
   year: string;
   enginePower: string;
   price: string;
   transmission: string;
   speedMax: string;
+  image: string;
 };
 
 export const getCars = createAsyncThunk('cars/getCars', async () => {
@@ -27,7 +29,5 @@ const slice = createSlice({
     });
   },
 });
-
-export const {} = slice.actions;
 
 export const carsReducer = slice.reducer;

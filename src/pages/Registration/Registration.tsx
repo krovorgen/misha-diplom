@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useCallback } from 'react';
+import React, { SyntheticEvent, useCallback, useState } from 'react';
 import { Input } from '@alfalab/core-components/input';
 
 import styles from './Registration.module.scss';
@@ -7,17 +7,20 @@ import { Typography } from '@alfalab/core-components/typography';
 import { Link } from '@alfalab/core-components/link';
 import { Navigate, NavLink } from 'react-router-dom';
 import { Router } from '../../helpers/router';
-import { ArrowBackMIcon } from '@alfalab/icons-glyph/ArrowBackMIcon';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { registrationUser } from '../../redux/features/authSlice';
+import { ReturnBack } from '../../components/ReturnBack/ReturnBack';
+
 export const Registration = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.token);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
     async (e: SyntheticEvent<HTMLFormElement>) => {
       e.preventDefault();
+      setIsLoading(true);
 
       const {
         first_name: { value: first_name },
@@ -39,7 +42,11 @@ export const Registration = () => {
 
       if (password !== passwordRepeat) toast.error('Пароли не совпадают :(');
 
-      dispatch(registrationUser({ first_name, last_name, username, email, password, tel }));
+      try {
+        await dispatch(registrationUser({ first_name, last_name, username, email, password, tel }));
+      } finally {
+        setIsLoading(false);
+      }
     },
     [dispatch],
   );
@@ -48,9 +55,7 @@ export const Registration = () => {
 
   return (
     <>
-      <NavLink className={styles.link} to={Router.home}>
-        <ArrowBackMIcon /> Вернуться на главную
-      </NavLink>
+      <ReturnBack />
       <Typography.TitleResponsive tag="h1" className="title">
         Регистрация
       </Typography.TitleResponsive>
@@ -102,7 +107,13 @@ export const Registration = () => {
             </Link>
           </NavLink>{' '}
         </Typography.Text>
-        <Button className={styles.button} view="accent" block size="s" type="submit">
+        <Button
+          className={styles.button}
+          loading={isLoading}
+          view="accent"
+          block
+          size="s"
+          type="submit">
           Registration
         </Button>
       </form>

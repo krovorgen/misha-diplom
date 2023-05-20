@@ -3,6 +3,10 @@ import { Select } from '@alfalab/core-components/select';
 import styles from './Order.module.scss';
 import { v4 } from 'uuid';
 import { CarType } from '../../../redux/features/carsSlice';
+import { Button } from '@alfalab/core-components/button';
+import { api } from '../../../api';
+import { catchHandler } from '../../../helpers/catchHandler';
+import { toast } from 'react-toastify';
 
 type Props = { cars: CarType[] };
 
@@ -11,12 +15,22 @@ export const Order: FC<Props> = ({ cars }) => {
   const [selectedCar, setSelectedCar] = useState(options[0]);
 
   const handleChange = useCallback(({ selectedMultiple }: any) => {
-    console.log(selectedMultiple);
-    setSelectedCar(selectedMultiple[0]);
+    if (selectedMultiple.length > 0) {
+      setSelectedCar(selectedMultiple[0]);
+    }
   }, []);
 
+  const createOrder = useCallback(async () => {
+    try {
+      const data = await api.createOrder(selectedCar.id);
+      if (data.data.id) toast('Заказ создан');
+    } catch ({ response }) {
+      catchHandler(response);
+    }
+  }, [selectedCar.id]);
+
   return (
-    <div>
+    <div className={styles.root}>
       <Select
         className={styles.select}
         allowUnselect={true}
@@ -33,7 +47,16 @@ export const Order: FC<Props> = ({ cars }) => {
         <p>Год выпуска: {selectedCar.year}</p>
         <p>Коробка передач: {selectedCar.transmission}</p>
         <p>Максимальная скорость: {selectedCar.speedMax}</p>
+        <p>
+          Фото:
+          <img className={styles.img} src={selectedCar.image} alt={selectedCar.model} />
+        </p>
       </div>
+      {localStorage.getItem('token') && (
+        <Button view="accent" onClick={createOrder} size="xs" block className={styles.btn}>
+          Заказать
+        </Button>
+      )}
     </div>
   );
 };

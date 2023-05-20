@@ -1,0 +1,19 @@
+@import "./src/scss/helpers/variables";
+@import "./src/scss/helpers/mixins";
+
+.root {
+  margin-bottom: 16px;
+}
+
+.items {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.item {
+}
+
+.img {
+  width: 200px;
+  height: auto;
+}

@@ -19,6 +19,7 @@ import { Router } from './helpers/router';
 import { getCars } from './redux/features/carsSlice';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { initializedApp } from './redux/features/authSlice';
+import { Orders } from './pages/Orders';
 
 export const App = () => {
   const dispatch = useAppDispatch();
@@ -72,11 +73,14 @@ export const App = () => {
       <div className={styles.content}>
         <div className={cn('container', styles.container)}>
           <div className={styles.box}>
-            <Routes>
-              <Route path={Router.home} element={<Home />}></Route>
-              <Route path={Router.registration} element={<Registration />}></Route>
-              <Route path={Router.login} element={<Login />}></Route>
-            </Routes>
+            <div className={styles.wrap}>
+              <Routes>
+                <Route path={Router.home} element={<Home />}></Route>
+                <Route path={Router.registration} element={<Registration />}></Route>
+                <Route path={Router.login} element={<Login />}></Route>
+                <Route path={Router.orders} element={<Orders />}></Route>
+              </Routes>
+            </div>
           </div>
         </div>
       </div>

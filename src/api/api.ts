@@ -19,7 +19,7 @@ export const api = {
     return instance.get(`/cars/`);
   },
   getOrders(id: number) {
-    return instanceAuth.get(`/orders/${id}`);
+    return instanceAuth.get(`/orders/${id}/`);
   },
   createOrder(carId: number) {
     return instanceAuth.post(`/orders/create/${carId}/`, {});

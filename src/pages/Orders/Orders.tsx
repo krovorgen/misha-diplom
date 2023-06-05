@@ -12,6 +12,8 @@ export const Orders = () => {
   const orders = useAppSelector((state) => state.orders);
   const user = useAppSelector((state) => state.auth.user);
 
+  console.log(user);
+
   useEffect(() => {
     if (user?.id) {
       dispatch(getOrders(user.id));

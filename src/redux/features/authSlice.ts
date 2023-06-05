@@ -72,8 +72,8 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(initializedApp.fulfilled, (state, action) => {
-        if (action.payload?.user_data) {
-          state.user = action.payload.user_data;
+        if (action.payload) {
+          state.user = action.payload;
         }
       })
       .addCase(loginUser.fulfilled, (state, action) => {

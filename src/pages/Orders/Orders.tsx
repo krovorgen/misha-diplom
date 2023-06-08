@@ -27,6 +27,7 @@ export const Orders = () => {
           {orders.map((item, index) => (
             <>
               <li className={styles.item}>
+                <p>Имя клиента: {item?.client_name}</p>
                 <p>id: {item.id}</p> <p>машина: {item.car.model}</p>
                 <p>
                   Фото:

@@ -4,6 +4,7 @@ import { api } from '../../api';
 export type OrderType = {
   id: number;
   status: 'Одобрено' | 'Отказано';
+  client_name: string;
   car: {
     id: number;
     model: string;

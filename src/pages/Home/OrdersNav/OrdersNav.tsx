@@ -16,6 +16,11 @@ export const OrdersNav = () => {
           Все заказы
         </Button>
       </NavLink>
+      <NavLink to={Router.cabinet}>
+        <Button view="accent" size="xs" block Component="span">
+          Кабинет
+        </Button>
+      </NavLink>
       <Button view="accent" onClick={exit} size="xs" block>
         Выйти
       </Button>

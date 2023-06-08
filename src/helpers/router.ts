@@ -3,4 +3,5 @@ export enum Router {
   login = '/login',
   registration = '/registration',
   orders = '/orders',
+  cabinet = '/cabinet',
 }

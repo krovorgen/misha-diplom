@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useState } from 'react';
 import { Select } from '@alfalab/core-components/select';
 import styles from './Order.module.scss';
 import { v4 } from 'uuid';
@@ -7,12 +7,19 @@ import { Button } from '@alfalab/core-components/button';
 import { api } from '../../../api';
 import { catchHandler } from '../../../helpers/catchHandler';
 import { toast } from 'react-toastify';
+import { Input } from '@alfalab/core-components/input';
 
 type Props = { cars: CarType[] };
 
 export const Order: FC<Props> = ({ cars }) => {
   const options = cars.map((item) => ({ ...item, content: item.model, key: v4() }));
   const [selectedCar, setSelectedCar] = useState(options[0]);
+
+  const [clientName, setClientName] = useState('');
+
+  const onChangeClientName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setClientName(e.currentTarget.value);
+  }, []);
 
   const handleChange = useCallback(({ selectedMultiple }: any) => {
     if (selectedMultiple.length > 0) {
@@ -22,12 +29,12 @@ export const Order: FC<Props> = ({ cars }) => {
 
   const createOrder = useCallback(async () => {
     try {
-      const data = await api.createOrder(selectedCar.id);
+      const data = await api.createOrder(selectedCar.id, clientName);
       if (data.data.id) toast('Заказ создан');
     } catch ({ response }) {
       catchHandler(response);
     }
-  }, [selectedCar.id]);
+  }, [selectedCar.id, clientName]);
 
   return (
     <div className={styles.root}>
@@ -40,6 +47,13 @@ export const Order: FC<Props> = ({ cars }) => {
         options={options}
         placeholder="Выберите машину"
         block={true}
+      />
+      <Input
+        className={styles.select}
+        block
+        label="Имя клиента"
+        value={clientName}
+        onChange={onChangeClientName}
       />
       <div className={styles.text}>
         <p>Мощность: {selectedCar.enginePower}</p>

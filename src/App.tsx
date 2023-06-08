@@ -9,6 +9,9 @@ import car3 from './images/3.png';
 import car4 from './images/4.png';
 import car5 from './images/5.png';
 import car6 from './images/6.png';
+import telegram from './images/telegram.png';
+import gmail from './images/gmail.png';
+import telephone from './images/telephone.png';
 
 import styles from './App.module.scss';
 import { Route, Routes } from 'react-router-dom';
@@ -20,6 +23,7 @@ import { getCars } from './redux/features/carsSlice';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { initializedApp } from './redux/features/authSlice';
 import { Orders } from './pages/Orders';
+import { Cabinet } from './pages/Cabinet';
 
 export const App = () => {
   const dispatch = useAppDispatch();
@@ -79,11 +83,34 @@ export const App = () => {
                 <Route path={Router.registration} element={<Registration />}></Route>
                 <Route path={Router.login} element={<Login />}></Route>
                 <Route path={Router.orders} element={<Orders />}></Route>
+                <Route path={Router.cabinet} element={<Cabinet />}></Route>
               </Routes>
             </div>
           </div>
         </div>
       </div>
+      <footer className={styles.footer}>
+        <div className={cn('container', styles.footerContainer)}>
+          <ul className={styles.items}>
+            <li className={styles.item}>
+              <a href="tel:+79991231212" className={styles.link}>
+                <img src={telephone} alt="telegram" /> +7 (999) 123-12-12
+              </a>
+            </li>
+            <li className={styles.item}>
+              <a href="mailto:botkursach@gmail.com" className={styles.link}>
+                <img src={gmail} alt="gmail" /> botkursach@gmail.com
+              </a>
+            </li>
+            <li className={styles.item}>
+              <a href="https://telegram.me/snajj" className={styles.link}>
+                <img src={telegram} alt="telephone" /> @snajj
+              </a>
+            </li>
+          </ul>
+          <p className={styles.copyright}>© 2023 «Аренда машин у Мишы»</p>
+        </div>
+      </footer>
     </div>
   );
 };

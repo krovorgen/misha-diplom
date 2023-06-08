@@ -2,17 +2,14 @@
 @import "./src/scss/helpers/mixins";
 
 .root {
-  margin-bottom: 16px;
 }
 
 .items {
-  max-height: 300px;
-  overflow: auto;
+  margin-top: 16px;
 }
 
 .item {
-}
-
-.img {
-  height: auto;
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
 }

@@ -21,8 +21,10 @@ export const api = {
   getOrders(id: number) {
     return instanceAuth.get(`/orders/all/`);
   },
-  createOrder(carId: number) {
-    return instanceAuth.post(`/orders/create/${carId}/`, {});
+  createOrder(carId: number, clientName: string) {
+    return instanceAuth.post(`/orders/create/${carId}/`, {
+      client_name: clientName,
+    });
   },
   checkLogin() {
     return instanceAuth.get(`/auth/me/`, {

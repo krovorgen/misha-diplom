@@ -8,15 +8,21 @@ import { api } from '../../../api';
 import { catchHandler } from '../../../helpers/catchHandler';
 import { toast } from 'react-toastify';
 import { Input } from '@alfalab/core-components/input';
+import { Checkbox } from '@alfalab/core-components/checkbox';
+import { useAppSelector } from '../../../hooks';
 
 type Props = { cars: CarType[] };
 
 export const Order: FC<Props> = ({ cars }) => {
+  const user = useAppSelector((state) => state.auth.user);
+
   const options = cars.map((item) => ({ ...item, content: item.model, key: v4() }));
   const [selectedCar, setSelectedCar] = useState(options[0]);
 
-  const [clientName, setClientName] = useState('');
+  const [needMechanic, setNeedMechanic] = useState(false);
+  const handleChangeMechanic = () => setNeedMechanic(!needMechanic);
 
+  const [clientName, setClientName] = useState('');
   const onChangeClientName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setClientName(e.currentTarget.value);
   }, []);
@@ -29,12 +35,12 @@ export const Order: FC<Props> = ({ cars }) => {
 
   const createOrder = useCallback(async () => {
     try {
-      const data = await api.createOrder(selectedCar.id, clientName);
+      const data = await api.createOrder(selectedCar.id, clientName, Number(needMechanic));
       if (data.data.id) toast('Заказ создан');
     } catch ({ response }) {
       catchHandler(response);
     }
-  }, [selectedCar.id, clientName]);
+  }, [selectedCar.id, clientName, needMechanic]);
 
   return (
     <div className={styles.root}>
@@ -48,13 +54,25 @@ export const Order: FC<Props> = ({ cars }) => {
         placeholder="Выберите машину"
         block={true}
       />
-      <Input
-        className={styles.select}
-        block
-        label="Имя клиента"
-        value={clientName}
-        onChange={onChangeClientName}
-      />
+      {user && (
+        <>
+          <Input
+            className={styles.select}
+            block
+            label="Имя клиента"
+            value={clientName}
+            onChange={onChangeClientName}
+          />
+          <Checkbox
+            className={styles.checkbox}
+            block={true}
+            size="m"
+            onChange={handleChangeMechanic}
+            checked={needMechanic}
+            label="Нужен ли сразу механик?"
+          />
+        </>
+      )}
       <div className={styles.text}>
         <p>Мощность: {selectedCar.enginePower}</p>
         <p>Цена: {selectedCar.price}</p>

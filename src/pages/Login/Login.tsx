@@ -45,7 +45,15 @@ export const Login = () => {
       </Typography.TitleResponsive>
       <form className={styles.form} onSubmit={onSubmit}>
         <Input className={styles.input} block label="Логин" size="s" name="username" required />
-        <Input className={styles.input} block label="Пароль" size="s" name="password" required />
+        <Input
+          className={styles.input}
+          block
+          label="Пароль"
+          size="s"
+          type="password"
+          name="password"
+          required
+        />
         <Typography.Text tag="p">
           Нет аккаунта?{' '}
           <NavLink to={Router.registration}>

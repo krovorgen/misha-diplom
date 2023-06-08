@@ -108,7 +108,7 @@ export const App = () => {
               </a>
             </li>
           </ul>
-          <p className={styles.copyright}>© 2023 «Аренда машин у Мишы»</p>
+          <p className={styles.copyright}>© 2023 «Арент»</p>
         </div>
       </footer>
     </div>
